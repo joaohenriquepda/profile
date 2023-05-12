@@ -4,7 +4,7 @@ import './App.css';
 
 function App() {
 
-  const API_URL = 'https://pokeapi.co/api/v2/pokemon/ditto';
+  const API_URL = 'https://pokeapi.co/api/v2/pokemon';
 
   const [data, setData] = useState<any>(null); // Change 'any' to the expected data type
 
@@ -13,8 +13,8 @@ function App() {
     try {
       const response = await fetch(API_URL);
       const jsonData = await response.json();
-      setData(jsonData);
       console.log(jsonData);
+      setData(jsonData.results);
     } catch (error) {
       console.error('Error fetching data:', error);
     }
@@ -34,7 +34,11 @@ function App() {
         <p>
           Edit <code>src/App.tsx</code> and save to reload.
         </p>
-
+        <ul>
+          {data?.map((item: any) => (
+            <li key={item.id}>{item.name}</li>
+          ))}
+        </ul>
         <a
           className="App-link"
           href="https://reactjs.org"
